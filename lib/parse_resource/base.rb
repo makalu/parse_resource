@@ -248,7 +248,7 @@ module ParseResource
 
         objects.each do |item|
           method ||= (item.new?) ? "POST" : "PUT"
-          object_path = "#{api_path}/#{item.class.model_name_uri}"
+          object_path = "/#{api_path.split('/').last}/#{item.class.model_name_uri}"
           object_path = "#{object_path}/#{item.id}" if item.id
           json = {
             "method" => method,
