@@ -203,6 +203,10 @@ module ParseResource
       ENV['BASE_API_PATH'] || 'https://api.parse.com/1'
     end
 
+    def self.mount_path
+      ENV['PARSE_MOUNT'] || '/1'
+    end
+
     # Gets the current class's Parse.com base_uri
     def self.model_base_uri
       "#{api_path}/#{model_name_uri}"
@@ -248,7 +252,7 @@ module ParseResource
 
         objects.each do |item|
           method ||= (item.new?) ? "POST" : "PUT"
-          object_path = "/#{item.class.model_name_uri}"
+          object_path = "#{mount_path}/#{item.class.model_name_uri}"
           object_path = "#{object_path}/#{item.id}" if item.id
           json = {
             "method" => method,
